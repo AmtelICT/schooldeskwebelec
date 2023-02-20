@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 //import {addStudent} from '../redux/slices/studentSlice';
 //import { createStudent } from "../redux/slices/studentSlice";
 import {addStudent} from '../redux/slices/studentsSlice';
-function NewStudent(){
+function CreateStudent(){
     
     const [name, setname] = useState('');
     const [email, setemail] = useState('');
@@ -65,4 +65,4 @@ function NewStudent(){
 
 }
 
-export default NewStudent;
+export default CreateStudent;

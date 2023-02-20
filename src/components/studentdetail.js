@@ -1,24 +1,26 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { updateTutorial, deleteTutorial } from "../slices/tutorials";
-import TutorialDataService from "../services/tutorial.service";
+import { updateStudent, deleteStudent } from "../redux/slices/studentSlice";
+import StudentDataService from "../services/student.service";
 import { withRouter } from '../common/with-router';
 
-class Tutorial extends Component {
+class Studentdetail extends Component {
   constructor(props) {
     super(props);
-    this.onChangeTitle = this.onChangeTitle.bind(this);
-    this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.getTutorial = this.getTutorial.bind(this);
+    this.onChangeName = this.onChangeName.bind(this);
+    this.onChangeEmail = this.onChangeEmail.bind(this);
+    this.onChangeRollno = this.onChangeRollno.bind(this);
+    this.getStudent= this.getStudent.bind(this);
     this.updateStatus = this.updateStatus.bind(this);
     this.updateContent = this.updateContent.bind(this);
-    this.removeTutorial = this.removeTutorial.bind(this);
+    this.removeStudent = this.removeStudent.bind(this);
 
     this.state = {
-      currentTutorial: {
+      currentStudent: {
         id: null,
-        title: "",
-        description: "",
+        name: "",
+        email: "",
+        rollno: "",
         published: false,
       },
       message: "",
@@ -26,38 +28,53 @@ class Tutorial extends Component {
   }
 
   componentDidMount() {
-    this.getTutorial(this.props.router.params.id);
+    this.getStudent(this.props.router.params.id);
   }
 
-  onChangeTitle(e) {
-    const title = e.target.value;
+  onChangeName(e) {
+    const name = e.target.value;
 
     this.setState(function (prevState) {
       return {
-        currentTutorial: {
-          ...prevState.currentTutorial,
-          title: title,
+        currentStudent: {
+          ...prevState.currentStudent,
+          name: name,
         },
       };
     });
   }
 
-  onChangeDescription(e) {
-    const description = e.target.value;
+  onChangeEmail(e) {
+    const email = e.target.value;
 
-    this.setState((prevState) => ({
-      currentTutorial: {
-        ...prevState.currentTutorial,
-        description: description,
-      },
-    }));
+    this.setState(function (prevState) {
+      return {
+        currentStudent: {
+          ...prevState.currentStudent,
+          email: email,
+        },
+      };
+    });
   }
 
-  getTutorial(id) {
-    TutorialDataService.get(id)
+  onChangeRollno(e) {
+    const rollno = e.target.value;
+
+    this.setState(function (prevState) {
+      return {
+        currentStudent: {
+          ...prevState.currentStudent,
+          rollno: rollno,
+        },
+      };
+    });
+  }
+
+  getStudent(id) {
+    StudentDataService.get(id)
       .then((response) => {
         this.setState({
-          currentTutorial: response.data,
+            currentStudent: response.data,
         });
         console.log(response.data);
       })
@@ -68,21 +85,22 @@ class Tutorial extends Component {
 
   updateStatus(status) {
     var data = {
-      id: this.state.currentTutorial.id,
-      title: this.state.currentTutorial.title,
-      description: this.state.currentTutorial.description,
+      id: this.state.currentStudent.id,
+      name: this.state.currentStudent.name,
+      email: this.state.currentStudent.email,
+      rollno: this.state.currentStudent.rollno,
       published: status,
     };
 
     this.props
-      .updateTutorial({ id: this.state.currentTutorial.id, data })
+      .updateStudent({ id: this.state.currentStudent.id, data })
       .unwrap()
       .then((reponse) => {
         console.log(reponse);
 
         this.setState((prevState) => ({
-          currentTutorial: {
-            ...prevState.currentTutorial,
+          currentStudent: {
+            ...prevState.currentStudent,
             published: status,
           },
         }));
@@ -96,7 +114,7 @@ class Tutorial extends Component {
 
   updateContent() {
     this.props
-      .updateTutorial({ id: this.state.currentTutorial.id, data: this.state.currentTutorial })
+      .updateStudent({ id: this.state.currentStudent.id, data: this.state.currentStudent })
       .unwrap()
       .then((reponse) => {
         console.log(reponse);
@@ -108,11 +126,11 @@ class Tutorial extends Component {
       });
   }
 
-  removeTutorial() {
+  removeStudent() {
     this.props
-      .deleteTutorial({ id: this.state.currentTutorial.id })
+      .deleteStudent({ id: this.state.currentStudent.id })
       .then(() => {
-        this.props.router.navigate('/tutorials');
+        this.props.router.navigate('/studentlist');
       })
       .catch((e) => {
         console.log(e);
@@ -120,32 +138,42 @@ class Tutorial extends Component {
   }
 
   render() {
-    const { currentTutorial } = this.state;
+    const { currentStudent } = this.state;
 
     return (
       <div>
-        {currentTutorial ? (
+        {currentStudent ? (
           <div className="edit-form">
             <h4>Tutorial</h4>
             <form>
               <div className="form-group">
-                <label htmlFor="title">Title</label>
+                <label htmlFor="title">Name</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="title"
-                  value={currentTutorial.title}
-                  onChange={this.onChangeTitle}
+                  id="name"
+                  value={currentStudent.name}
+                  onChange={this.onChangeName}
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="description">Description</label>
+                <label htmlFor="title">email</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="description"
-                  value={currentTutorial.description}
-                  onChange={this.onChangeDescription}
+                  id="email"
+                  value={currentStudent.email}
+                  onChange={this.onChangeEmail}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="title">roll</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="rollno"
+                  value={currentStudent.rollno}
+                  onChange={this.onChangeRollno}
                 />
               </div>
 
@@ -153,11 +181,11 @@ class Tutorial extends Component {
                 <label>
                   <strong>Status:</strong>
                 </label>
-                {currentTutorial.published ? "Published" : "Pending"}
+                {currentStudent.published ? "Published" : "Pending"}
               </div>
             </form>
 
-            {currentTutorial.published ? (
+            {currentStudent.published ? (
               <button
                 className="badge badge-primary mr-2"
                 onClick={() => this.updateStatus(false)}
@@ -175,7 +203,7 @@ class Tutorial extends Component {
 
             <button
               className="badge badge-danger mr-2"
-              onClick={this.removeTutorial}
+              onClick={this.removeStudent}
             >
               Delete
             </button>
@@ -200,4 +228,4 @@ class Tutorial extends Component {
   }
 }
 
-export default connect(null, { updateTutorial, deleteTutorial })(withRouter(Tutorial));
+export default connect(null, { updateStudent, deleteStudent })(withRouter(Studentdetail));

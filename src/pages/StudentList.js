@@ -9,7 +9,8 @@ import Paper from "@material-ui/core/Paper";
 
 //import { connect } from "react-redux";
 import { useSelector } from 'react-redux';
-import {allstudents} from '../redux/slices/studentSlice';
+//import {allstudents} from '../redux/slices/studentSlice';
+import {fetchStudents} from '../redux/slices/studentsSlice';
 //import {studentSelectors, retrieveStudents} from '../redux/slices/studentSlice';  
 
 

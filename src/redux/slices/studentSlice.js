@@ -31,7 +31,7 @@ const initialState = {
     students: [],
   };
 */
-const initialState = [];
+//const initialState = [];
 
 export const createStudent = createAsyncThunk(
   "students/create",

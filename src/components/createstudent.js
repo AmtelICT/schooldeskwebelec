@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { createStudent } from "../redux/slices/studentSlice";
+//import { createStudent } from "../redux/slices/studentSlice";
+import { addStudent } from "../redux/slices/studentsSlice";
 import '../css/page/newUser.css'
 class AddStudent extends Component {
   constructor(props) {
@@ -16,8 +17,8 @@ class AddStudent extends Component {
       name: "",
       email: "",
       rollno: "",
-      published: false,
-      submitted: false,
+   //   published: false,
+    //  submitted: false,
     };
   }
 
@@ -43,7 +44,7 @@ class AddStudent extends Component {
     const { name,email, rollno} = this.state;
 
     this.props
-      .createStudent({ name,email, rollno })
+      .addStudent({ name,email, rollno })
       .unwrap()
       .then((data) => {
         this.setState({
@@ -51,8 +52,8 @@ class AddStudent extends Component {
           name: data.name,
           email: data.email,
           rollno: data.rollno,
-          published: data.published,
-          submitted: true,
+         // published: data.published,
+         // submitted: true,
         });
         console.log(data);
       })
@@ -67,8 +68,8 @@ class AddStudent extends Component {
       name: "",
       email: "",
       rollno: "",
-      published: false,
-      submitted: false,
+    //  published: false,
+    //  submitted: false,
     });
   }
 
@@ -131,4 +132,4 @@ class AddStudent extends Component {
   }
 }
 
-export default connect(null, { createStudent })(AddStudent);
+export default connect(null, { addStudent })(AddStudent);

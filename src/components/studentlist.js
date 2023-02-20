@@ -18,7 +18,7 @@ class StudentsList extends Component {
 
     this.state = {
       currentStudent: null,
-    //  currentId: -1
+   //   currentId: -1
     //  searchTitle: "",
     };
   }
@@ -38,14 +38,14 @@ class StudentsList extends Component {
   refreshData() {
     this.setState({
       currentStudent: null,
-     // currentId: -1,
+   //   currentId: -1,
     });
   }
 
   setActiveStudent(student) {
     this.setState({
       currentStudent: student,
-    //  currentId: id,
+   //   currentId: student.id,
     });
   }
 /*
@@ -68,7 +68,7 @@ class StudentsList extends Component {
   }
 */
   render() {
-    const {  currentStudent } = this.state;
+    const {  currentStudent, currentId } = this.state;
     const { students } = this.props;
 
     return (
@@ -102,8 +102,8 @@ class StudentsList extends Component {
                 <li
                //   className={
                 //    "list-group-item " +
-                  //  (id === currentId ? "active" : "")
-                //  }
+                //    (id === currentId ? "active" : "")
+               //   }
                   onClick={() => this.setActiveStudent(student)}
                 //  key={id}
                 >
@@ -170,6 +170,7 @@ class StudentsList extends Component {
 const mapStateToProps = (state) => {
   return {
     students: state.students.students,
+   // id:state.students.students.id
   };
 };
 

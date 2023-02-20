@@ -13,6 +13,7 @@ import NewProduct from "./pages/NewProduct";
 //import StudentList from './pages/StudentList';
 import AddStudent from  './components/createstudent';
 import StudentsList from  './components/studentlist';
+import Studentdetail from  './components/studentdetail';
 function App() {
   return (
     <Router>
@@ -29,6 +30,7 @@ function App() {
           <Route path="/newproduct" element={<NewProduct />} />
           <Route path="/newstudent" element={<AddStudent />} />
           <Route path="/studentlist" element={<StudentsList />} />
+          <Route path="/edit-student/:id" element={<Studentdetail/>} />
           <Route path="/studentdetails" element={<StudentsList />} />
         </Routes>
       </div>
